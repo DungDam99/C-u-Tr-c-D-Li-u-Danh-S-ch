@@ -122,7 +122,7 @@ public class MyLinkedList<E> extends Node {
             if (head == null) tail = null;
             return (E) temp.data;
         }
-        if (index == numNodes - 1){/////////////
+        if (index == numNodes - 1){
             Node current = head;
             for (int i = 0; i < numNodes-2; i++) {
                 current = current.next;
@@ -130,6 +130,7 @@ public class MyLinkedList<E> extends Node {
             Node temp = tail;
             tail = current;
             tail.next = null;
+            numNodes--;
             return (E) temp.data;
         }
         Node previous = head;
