@@ -4,7 +4,7 @@ public class MyLinkedList<E> extends Node {
 
     private Node head = null;
     private Node tail = null;
-    private int numNodes;
+    private int numNodes = 0;
 
     public MyLinkedList(){
 
@@ -100,6 +100,10 @@ public class MyLinkedList<E> extends Node {
         return true;
     }
     public E remove(int index){
+        if (index < 0 || index >= numNodes){
+            System.out.println("The index " + index + " is not valid.");
+            return null;
+        }
         if (numNodes == 0){
             System.out.println("Linked list is empty.");
             return null;
@@ -110,10 +114,7 @@ public class MyLinkedList<E> extends Node {
             numNodes = 0;
             return (E) temp.data;
         }
-        if (index < 0 || index >= numNodes){
-            System.out.println("The index " + index + " is not valid.");
-            return null;
-        }
+
         if (index == 0){
             Node temp = head;
             head = temp.next;
@@ -121,7 +122,7 @@ public class MyLinkedList<E> extends Node {
             if (head == null) tail = null;
             return (E) temp.data;
         }
-        if (index == numNodes - 1){
+        if (index == numNodes - 1){/////////////
             Node current = head;
             for (int i = 0; i < numNodes-2; i++) {
                 current = current.next;
@@ -147,7 +148,7 @@ public class MyLinkedList<E> extends Node {
         }
         Node current = head;
         for (int i = 0; i < numNodes; i++) {
-            if ( current == e){
+            if ( e == current.data){
                 remove(i);
                 return true;
             }else{
@@ -160,22 +161,25 @@ public class MyLinkedList<E> extends Node {
         return numNodes;
     }
     public E clone(){
-        Node temp = null;
-        Node current = this.head;
-        do{
-            temp.data = this.data;
-            temp = temp.next;
+        MyLinkedList temp = new MyLinkedList();
+
+        Node current = head;
+        //current != null;
+        do {
+            temp.addLast(current.data);
             current = current.next;
-        }while(current.next != null || temp.next != null);
-        return (E) temp.data;
+        }while(current != null);
+        return (E) temp;
     }
+    /*for (Node<E> x = first; x != null; x = x.next)
+            clone.add(x.item);*/
     public boolean contains(E o){
         if (o == null) {
             return false;
         }
         Node current = head;
         for (int i = 0; i < numNodes; i++) {
-            if(current == o){
+            if(current.data == o){
                 return true;
             }
             current = current.next;
@@ -186,7 +190,7 @@ public class MyLinkedList<E> extends Node {
         if (contains(o)){
             Node current = head;
             for (int i = 0; i < numNodes; i++) {
-                if(current == o){
+                if(current.data == o){
                     return i;
                 }
                 current = current.next;
